@@ -10,18 +10,17 @@ router.get('/', function(req, res) {
 });
 
 router.post('/signup', function(req, res){
-  console.log('signup', req.body);
-  User.register(user, function(err, newUser){
+  User.register(req.body, function(err, newUser){
     if (err) return res.status(400).send(err);
     res.send(newUser);
   });
 });
 
 router.post('/login', function(req, res){
-  console.log('login', req.body);
-  User.authenticate(user, function(err, existingUser){
+  User.authenticate(req.body, function(err, existingUser){
     if (err) return res.status(400).send(err);
-    res.send(existingUser);
+    var token = existingUser.token();
+    res.cookie('token', token).send(existingUser);
   });
 });
 

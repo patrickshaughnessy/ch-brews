@@ -2,14 +2,20 @@
 
 var app = angular.module('chBrews');
 
-app.controller('homeCtrl', function($scope) {
+app.controller('homeCtrl', function($scope, Auth) {
 
   $scope.signup = function(){
     var user = {
       email: $scope.signUpEmail,
       password: $scope.signUpPass1
     }
-    console.log('sign user', user);
+    Auth.signup(user)
+    .then(function(resp){
+      $scope.login(user);
+    })
+    .catch(function(err){
+      console.log(err);
+    })
   }
 
   $scope.login = function(){
@@ -17,7 +23,13 @@ app.controller('homeCtrl', function($scope) {
       email: $scope.loginEmail,
       password: $scope.loginPass
     }
-    console.log('login user', user);
+    Auth.login(user)
+    .then(function(resp){
+      console.log(resp.data);
+    })
+    .catch(function(err){
+      console.log(err);
+    })
   }
 
 });
