@@ -17,10 +17,11 @@ router.get('/randombeer', User.isAuthenticated, function(req, res){
 })
 
 router.post('/addtosampled', User.isAuthenticated, function(req, res){
-  var beerID = req.body;
-  User.findByIdAndUpdate(req.user._id, {sampled: $push(beerID)} function(err, beer){
+  var beerID = req.body.beerID;
+  console.log(beerID);
+  User.findByIdAndUpdate(req.user._id, {$push: {sampled: beerID}}, function(err, prevUser){
     if (err) return res.status(400).send(err);
-    res.send(beer);
+    res.send('beer added to sampled list');
   })
 })
 

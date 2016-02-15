@@ -7,11 +7,13 @@ app.directive('randomBeer', function(BeerSvc){
     var link = function(scope, elem, attrs){
       BeerSvc.getRandomBeer().then(function(resp){
         scope.beer = resp.data;
+        scope.addToSampled = function(){
+          BeerSvc.addToSampled(scope.beer.id).then(function(resp){
+            console.log('after adding to sampled', resp);
+          })
+        }
       })
 
-      scope.addToSampled = BeerSvc.addToSampled(scope.beer.id).then(function(resp){
-        console.log('after adding to sampled', resp);
-      })
 
     }
 

@@ -9,7 +9,7 @@ app.service('BeerSvc', function($http) {
   }
 
   this.addToSampled = function(beerID){
-    return $http.post('/users/addtosampled', beerID);
+    return $http.post('/users/addtosampled', {beerID: beerID});
   }
 
 });
