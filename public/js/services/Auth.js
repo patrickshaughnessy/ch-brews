@@ -12,4 +12,8 @@ app.service('Auth', function($http) {
     return $http.post('/login', user);
   }
 
+  this.authenticate = function(){
+    return $http.get('/auth');
+  }
+
 });

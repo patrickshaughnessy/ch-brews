@@ -2,7 +2,7 @@
 
 var app = angular.module('chBrews');
 
-app.controller('homeCtrl', function($scope, Auth) {
+app.controller('homeCtrl', function($scope, Auth, $state) {
 
   $scope.signup = function(){
     var user = {
@@ -25,7 +25,7 @@ app.controller('homeCtrl', function($scope, Auth) {
     }
     Auth.login(user)
     .then(function(resp){
-      console.log(resp.data);
+      $state.go('profile');
     })
     .catch(function(err){
       console.log(err);

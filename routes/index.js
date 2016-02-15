@@ -24,4 +24,8 @@ router.post('/login', function(req, res){
   });
 });
 
+router.get('/auth', User.isAuthenticated, function(req, res){
+  res.send(req.user);
+})
+
 module.exports = router;
