@@ -8,4 +8,8 @@ app.service('BeerSvc', function($http) {
     return $http.get('/users/randombeer');
   }
 
+  this.addToSampled = function(beerID){
+    return $http.post('/users/addtosampled', beerID);
+  }
+
 });

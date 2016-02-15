@@ -25,22 +25,25 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.statics.getRandomBeer = function(userinfo, cb){
-  console.log('user', BREWERYDB_API_KEY, userinfo);
   User.findById(userinfo._id, function(err, user){
     if (err) return cb(err);
-    request(`http://api.brewerydb.com/v2/beer/random?key=${BREWERYDB_API_KEY}`, function (error, response, body) {
-      if (error) return cb(error);
-      var beer = JSON.parse(body).data;
-      var beerID = beer.id;
-      // if (!user.viewed.indexOf(beerID)){
-      user.viewed.push(beerID);
-      user.beers.push({beer: beer});
-      user.save(function(err, savedUser){
-        console.log('there', err, beer, savedUser);
-        cb(beer)
+    var getBeer = function(cb){
+      request(`http://api.brewerydb.com/v2/beer/random?key=${BREWERYDB_API_KEY}`, function (error, response, body) {
+        if (error) return cb(error);
+        var beer = JSON.parse(body).data;
+        var beerID = beer.id;
+        if (user.viewed.indexOf(beerID) === -1){
+          user.viewed.push(beerID);
+          user.beers.push({beer: beer});
+          user.save(function(err, savedUser){
+            cb(err, beer)
+          })
+        } else {
+          getBeer(cb);
+        }
       })
-      // }
-    })
+    }
+    getBeer(cb);
   })
 }
 

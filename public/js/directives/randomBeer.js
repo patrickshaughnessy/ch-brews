@@ -9,6 +9,10 @@ app.directive('randomBeer', function(BeerSvc){
         scope.beer = resp.data;
       })
 
+      scope.addToSampled = BeerSvc.addToSampled(scope.beer.id).then(function(resp){
+        console.log('after adding to sampled', resp);
+      })
+
     }
 
     return {
