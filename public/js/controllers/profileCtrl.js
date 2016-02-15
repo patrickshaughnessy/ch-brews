@@ -2,7 +2,7 @@
 
 var app = angular.module('chBrews');
 
-app.controller('profileCtrl', function($scope, Auth, $state, $cookies) {
+app.controller('profileCtrl', function($scope, Auth, $state, $cookies, $location) {
 
   if (!$cookies.get('token')){
     $state.go('home');

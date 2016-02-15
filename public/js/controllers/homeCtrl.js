@@ -19,7 +19,6 @@ app.controller('homeCtrl', function($scope, Auth, $state) {
   }
 
   $scope.login = function(newUser){
-    debugger;
     var user;
     if (!newUser){
       user = {
