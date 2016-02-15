@@ -18,10 +18,16 @@ app.controller('homeCtrl', function($scope, Auth, $state) {
     })
   }
 
-  $scope.login = function(){
-    var user = {
-      email: $scope.loginEmail,
-      password: $scope.loginPass
+  $scope.login = function(newUser){
+    debugger;
+    var user;
+    if (!newUser){
+      user = {
+        email: $scope.loginEmail,
+        password: $scope.loginPass
+      }
+    } else {
+      user = newUser;
     }
     Auth.login(user)
     .then(function(resp){
