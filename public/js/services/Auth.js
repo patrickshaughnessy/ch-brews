@@ -12,7 +12,7 @@ app.service('Auth', function($http) {
     return $http.post('/login', user);
   }
 
-  this.authenticate = function(){
+  this.authenticate = function(token){
     return $http.get('/auth');
   }
 

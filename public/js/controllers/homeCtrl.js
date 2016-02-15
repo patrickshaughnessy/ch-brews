@@ -25,6 +25,7 @@ app.controller('homeCtrl', function($scope, Auth, $state) {
     }
     Auth.login(user)
     .then(function(resp){
+      console.log(resp);
       $state.go('profile');
     })
     .catch(function(err){

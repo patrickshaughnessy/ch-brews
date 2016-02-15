@@ -12,12 +12,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('profile', {
       url: '/profile',
       templateUrl: '/html/profile.html',
-      controller: 'profileCtrl',
-      resolve: {
-        "currentAuth": ["Auth", function(Auth) {
-          return Auth.authenticate();
-        }]
-      }
+      controller: 'profileCtrl'
     })
 
   $urlRouterProvider.otherwise('/');
