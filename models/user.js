@@ -25,8 +25,12 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.statics.getRandomBeer = function(user, cb){
+  console.log('user', user, BREWERYDB_API_KEY);
+
   request(`http://api.brewerydb.com/v2/beer/random?key=${BREWERYDB_API_KEY}`, function (error, response, body) {
+    console.log(error, response, body);
     if (!error) return cb(error);
+    console.log('in get random fun', response.data);
     var beer = response.data;
     var beerID = beer.id;
     if (!user.viewed.indexOf(beerID)){

@@ -12,6 +12,7 @@ router.get('/info', User.isAuthenticated, function(req, res) {
 router.get('/randombeer', User.isAuthenticated, function(req, res){
   User.getRandomBeer(req.user, function(err, beer){
     if (err) return res.status(400).send(err);
+    console.log(beer);
     res.send(beer);
   })
 })
