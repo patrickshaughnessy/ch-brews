@@ -10,25 +10,32 @@ var request = require('request');
 
 var User;
 
+var Schema = mongoose.Schema;
+
 var userSchema = mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
+  viewed: [{ type:String }],
+  sampled: [{ type: String }],
   beers: [{
-    viewed: Boolean,
-    sampled: Boolean,
     rating: Number,
-    comments: String
+    comments: String,
+    beer: [Schema.Types.Mixed]
   }]
 });
 
 userSchema.statics.getRandomBeer = function(user, cb){
-  User.findOne({email: user.email}, function(err, user){
-    if (err) return cb(err);
-    request(`http://api.brewerydb.com/v2/?key=${BREWERYDB_API_KEY}`, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        console.log(body) // Show the HTML for the Google homepage.
-      }
-    })
+  request(`http://api.brewerydb.com/v2/beer/random?key=${BREWERYDB_API_KEY}`, function (error, response, body) {
+    if (!error) return cb(error);
+    var beer = response.data;
+    var beerID = beer.id;
+    if (!user.viewed.indexOf(beerID)){
+      user.viewed.push(beerID);
+      user.beers.push({beer: beer});
+      user.save(function(err, savedUser){
+        cb(err || beer)
+      })
+    }
   })
 }
 

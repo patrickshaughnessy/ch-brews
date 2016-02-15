@@ -6,7 +6,6 @@ var router = express.Router();
 var User = require('../models/user');
 
 router.get('/info', User.isAuthenticated, function(req, res) {
-  if (err) return res.status(400).send(err);
   res.send(req.user);
 });
 
