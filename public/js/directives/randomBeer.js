@@ -2,11 +2,12 @@
 
 var app = angular.module('chBrews');
 
-app.directive('randomBeer', function(beerSvc){
+app.directive('randomBeer', function(BeerSvc){
 
     var link = function(scope, elem, attrs){
-      scope.beer;
-
+      BeerSvc.getRandomBeer().then(function(resp){
+        scope.beer = resp.data;
+      })
 
     }
 

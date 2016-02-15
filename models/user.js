@@ -5,13 +5,32 @@ var bcrypt = require('bcrypt');
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var JWT_SECRET = process.env.JWT_SECRET;
+var BREWERYDB_API_KEY = process.env.BREWERYDB_API_KEY;
+var request = require('request');
 
 var User;
 
 var userSchema = mongoose.Schema({
   email: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  beers: [{
+    viewed: Boolean,
+    sampled: Boolean,
+    rating: Number,
+    comments: String
+  }]
 });
+
+userSchema.statics.getRandomBeer = function(user, cb){
+  User.findOne({email: user.email}, function(err, user){
+    if (err) return cb(err);
+    request(`http://api.brewerydb.com/v2/?key=${BREWERYDB_API_KEY}`, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body) // Show the HTML for the Google homepage.
+      }
+    })
+  })
+}
 
 userSchema.statics.register = function(user, cb) {
   var email = user.email;
