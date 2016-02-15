@@ -8,9 +8,13 @@ app.controller('profileCtrl', function($scope, Auth, $state, $cookies) {
     $state.go('home');
   }
 
-  Auth.getUserInfo($cookies.get('token')).then(function(resp){
+  Auth.getUserInfo().then(function(resp){
     $scope.user = resp.data;
-  })
+  });
+
+  $scope.viewRandomBeer = function(){
+    $scope.randomBeer = true;
+  }
 
 
 

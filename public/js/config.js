@@ -18,4 +18,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 })
 
-app.run
+app.run(function($http, $cookies){
+  $http.defaults.headers.common.Authorization = 'Bearer ' + $cookies.get('token');
+})
